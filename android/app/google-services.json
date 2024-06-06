@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "737167644580",
+    "firebase_url": "https://techincal-987c8-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "techincal-987c8",
+    "storage_bucket": "techincal-987c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737167644580:android:bb0e7f20568267c49e5331",
+        "android_client_info": {
+          "package_name": "com.example.technicaltest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_iTpIt--QdjNqIVHjbvRAwX3I_jtpVZs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
