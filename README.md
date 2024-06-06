@@ -24,7 +24,6 @@ ErwinHermawan_mdtest is a Flutter application with user authentication, email ve
 - Display a list of users retrieved from Firestore.
 - Each user item in the list shows the user's name, email, and email verification status.
 - Implement a filter option to filter users by email verification status.
-- Implement a search to find users by name or email.
 
 ### Email Verification
 - Users receive a verification email upon registration.
@@ -34,7 +33,7 @@ ErwinHermawan_mdtest is a Flutter application with user authentication, email ve
 - Implement a UI screen for users to enter their email address for password reset.
 
 ### Unit Test
-- Write unit tests to cover critical components such as authentication, email verification, password reset, and Firestore data retrieval.
+- Write unit tests to cover critical components such as creating account, password reset.
 
 ## Installation
 To get a local copy up and running, follow these simple steps.
