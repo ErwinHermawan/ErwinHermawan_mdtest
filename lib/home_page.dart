@@ -98,11 +98,30 @@ class UserList extends StatefulWidget {
 
 class _UserListState extends State<UserList> {
   bool _showVerifiedUsersOnly = false;
+  TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        TextField(
+          controller: _searchController,
+          decoration: const InputDecoration(
+            labelText: 'Search by username or email',
+          ),
+          onChanged: (value) {
+            setState(() {
+              _searchQuery = value.toLowerCase();
+            });
+          },
+        ),
         CheckboxListTile(
           title: const Text('Show verified users only'),
           value: _showVerifiedUsersOnly,
@@ -129,7 +148,13 @@ class _UserListState extends State<UserList> {
                 return Center(child: Text('Error: ${snapshot.error}'));
               }
 
-              final users = snapshot.data!.docs;
+              final users = snapshot.data!.docs.where((doc) {
+                final userData = doc.data() as Map<String, dynamic>;
+                final userName = userData['username'] ?? '';
+                final userEmail = userData['email'] ?? '';
+                return userName.toLowerCase().contains(_searchQuery) ||
+                    userEmail.toLowerCase().contains(_searchQuery);
+              }).toList();
 
               return ListView.builder(
                 itemCount: users.length,
