@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class HomePage extends StatelessWidget {
   final User? user;
 
@@ -26,7 +25,7 @@ class HomePage extends StatelessWidget {
       await FirebaseAuth.instance.signOut();
       Navigator.pushReplacementNamed(context, '/login');
     } catch (e) {
-     // print('Error logging out: $e');
+      // print('Error logging out: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Error logging out. Please try again.'),
@@ -41,38 +40,50 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home Page'),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Text(
-                  'Welcome ${user!.displayName ?? user!.email}',
-                  style: const TextStyle(fontSize: 24),
-                ),
-                const SizedBox(width: 10),
-                user!.emailVerified
-                    ? const Icon(Icons.verified, color: Colors.green)
-                    : ElevatedButton(
-                  onPressed: () => _sendEmailVerification(context),
-                  child: const Text('Verify Email'),
-                ),
-              ],
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Welcome ${user!.displayName ?? user!.email}',
+                          style: const TextStyle(fontSize: 24),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      user!.emailVerified
+                          ? const Icon(Icons.verified, color: Colors.green)
+                          : ElevatedButton(
+                        onPressed: () => _sendEmailVerification(context),
+                        child: const Text('Verify Email'),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    constraints: BoxConstraints(
+                      maxHeight: constraints.maxHeight * 0.7,
+                    ),
+                    child: const UserList(),
+                  ),
+                  const SizedBox(height: 20),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () => _logout(context),
+                      child: const Text('Logout'),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          const Expanded(
-            child: UserList(),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: () => _logout(context),
-              child: const Text('Logout'),
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

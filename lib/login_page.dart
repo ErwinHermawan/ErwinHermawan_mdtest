@@ -56,39 +56,51 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
-              keyboardType: TextInputType.emailAddress,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    TextField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(labelText: 'Email'),
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    const SizedBox(height: 8.0),
+                    TextField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(labelText: 'Password'),
+                      obscureText: true,
+                    ),
+                    const SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: () => _signIn(context),
+                      child: const Text('Login'),
+                    ),
+                    const SizedBox(height: 8.0),
+                    TextButton(
+                      onPressed: _goToRegisterPage,
+                      child: const Text('Create an account'),
+                    ),
+                    const SizedBox(height: 8.0),
+                    TextButton(
+                      onPressed: _goToForgotPasswordPage,
+                      child: const Text('Forgot Password?'),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            const SizedBox(height: 8.0),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () => _signIn(context),
-              child: const Text('Login'),
-            ),
-            const SizedBox(height: 8.0),
-            TextButton(
-              onPressed: _goToRegisterPage,
-              child: const Text('Create an account'),
-            ),
-            const SizedBox(height: 8.0),
-            TextButton(
-              onPressed: _goToForgotPasswordPage,
-              child: const Text('Forgot Password?'),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

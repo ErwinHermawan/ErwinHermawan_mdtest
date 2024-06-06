@@ -34,7 +34,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           );
         },
       );
-     // print('Password reset email sent to ${_emailController.text.trim()}');
     } catch (e) {
       // Show an error message
       showDialog(
@@ -54,10 +53,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           );
         },
       );
-      //print('Error sending password reset email: $e');
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -65,24 +62,38 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       appBar: AppBar(
         title: const Text('Forgot Password'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: constraints.maxWidth > 600 ? 600 : constraints.maxWidth,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    TextField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(
+                        labelText: 'Email',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    const SizedBox(height: 24),
+                    ElevatedButton(
+                      onPressed: () => _resetPassword(context),
+                      child: const Text('Reset Password'),
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () => _resetPassword(context),
-              child: const Text('Reset Password'),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
